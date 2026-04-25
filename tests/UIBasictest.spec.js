@@ -8,21 +8,24 @@ test.only("First playwright test", async ({ browser }) => {
   //chrome - plugins / cookies
   const context = await browser.newContext();
   const page = await context.newPage();
-  await page.goto("https://www.thegioididong.com");
+  const userName = page.locator("#username");
+  const password = page.locator("#password");
+  const signIn = page.locator("#signInBtn");
+  await page.goto("https://rahulshettyacademy.com/loginpagePractise/");
   //css     fill, type
-  // await page.locator("#txtPhoneNumber").fill("0909898177");
-  // await page.getByRole("button", { name: "Tiếp tục" }).click();
-  // const text = await page.locator("#dlding").textContent();
-  // console.log("TEXT =", text); listsearch item2020 listproduc itemcat42
 
-  await page.locator("#skw").fill("iphone 16");
-  await page.getByLabel("button suggest search").click();
-  console.log(
-    await page.locator(".listsearch .item.cat42").nth(0).textContent(),
-  );
-  console.log(
-    await page.locator(".listsearch .item.cat42").nth(1).textContent(),
-  );
+  await userName.fill("rahulshettyacademy");
+  await password.type("learning");
+  await signIn.click();
+  console.log(await page.locator("[style*='block']").textContent());
+  await expect(page.locator("[style*='block']")).toContainText("Incorrect");
+
+  await userName.fill("");
+  await userName.fill("rahulshettyacademy");
+  await password.type("learning");
+  await signIn.click();
+  console.log(await page.locator(".card-body a").first.textContent());
+  console.log(await page.locator(".card-body a").nth(1).textContent());
 });
 
 test("Page playwright test", async ({ page }) => {
